@@ -35,12 +35,14 @@ export class MapComponent implements OnInit, AfterViewInit {
           if (event.type === google.maps.drawing.OverlayType.RECTANGLE) {
             const bounds = event.overlay.getBounds();
             console.log('Rectangle drawn:', bounds.toString());
+            this.populateBounds(bounds);
             this.drawnRectangles.push(event.overlay); // Store the drawn rectangle
 
             // Add listener for bounds_changed event
             google.maps.event.addListener(event.overlay, 'bounds_changed', () => {
               const newBounds = event.overlay.getBounds();
               console.log('Rectangle modified:', newBounds.toString());
+              this.populateBounds(newBounds);
             });
           }
         });
@@ -48,6 +50,17 @@ export class MapComponent implements OnInit, AfterViewInit {
     } catch (error) {
       console.error('Error getting Google Maps instance:', error);
     }
+  }
+
+  populateBounds(bounds) {
+    // Populate the first element of the first tuple to the "South" input field
+    document.getElementById('south').setAttribute('value', bounds.getSouthWest().lat().toString());
+    // Populate the second element of the first tuple to the "West" input field
+    document.getElementById('west').setAttribute('value', bounds.getSouthWest().lng().toString());
+    // Populate the first element of the second tuple to the "North" input field
+    document.getElementById('north').setAttribute('value', bounds.getNorthEast().lat().toString());
+    // Populate the second element of the second tuple to the "East" input field
+    document.getElementById('east').setAttribute('value', bounds.getNorthEast().lng().toString());
   }
 
   initDrawingManager() {
@@ -75,5 +88,9 @@ export class MapComponent implements OnInit, AfterViewInit {
       rectangle.setMap(null); // Remove rectangle from the map
     });
     this.drawnRectangles = []; // Clear the array
+    document.getElementById('south').setAttribute('value', '');
+    document.getElementById('west').setAttribute('value', '');
+    document.getElementById('north').setAttribute('value', '');
+    document.getElementById('east').setAttribute('value', '');
   }
 }
