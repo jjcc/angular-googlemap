@@ -1,13 +1,13 @@
 <div style="display: flex;">
   <div style="display: flex; flex-direction: column;">
     <h1>Google Map Drawing </h1>
-    <button (click)="eraseRectangles()">Erase Rectangles</button> <!-- Button to erase rectangles -->
     <!-- Google Map will be displayed here -->
     <agm-map [latitude]="lat" [longitude]="lng" [zoom]="zoom" style="width: 800px;">
       <!-- Additional map features will be added here -->
     </agm-map>
   </div>
   <div style="display: flex; flex-direction: column; justify-content: center; margin-left: 20px;">
+    <button (click)="eraseRectangles()" style="width: 200px;">Erase Rectangles</button> <!-- Button to erase rectangles -->
     <input id="north" type="text" placeholder="North" />
     <input id="south"   type="text" placeholder="South" />
     <input id="east"   type="text" placeholder="East" />
